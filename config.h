@@ -4,6 +4,19 @@
 #define TERMINAL "st"
 #define TERMCLASS "St"
 
+/* onedark colors */
+static char black[]       = "#1e222a";
+static char gray2[]       = "#2e323a"; // unfocused window border
+static char gray3[]       = "#545862";
+static char gray4[]       = "#6d8dad";
+static char blue[]        = "#61afef";  // focused window border
+static char green[]       = "#7EC7A2";
+static char red[]         = "#e06c75";
+static char orange[]      = "#caaa6a";
+static char yellow[]      = "#EBCB8B";
+static char pink[]        = "#c678dd";
+static char col_borderbar[]  = "#1e222a"; // inner border
+
 /* appearance */
 static unsigned int borderpx  = 5;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
@@ -16,7 +29,7 @@ static int smartgaps          = 1;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=14", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "Material Design Icons-Regular:size=14", "FontAwesome:size=14" };
-static char normbgcolor[]           = "#222222";
+static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
@@ -28,8 +41,13 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static char *colors[][3] = {
        /*                    fg           bg           border   */
-       [SchemeNorm]   =  { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]    =  { selfgcolor,  selbgcolor,  selbordercolor  },
+       [SchemeNorm]   =  {   blue,        black,       col_borderbar },
+       [SchemeSel]    =  {   black,       blue,        col_borderbar },
+       [SchemeRed]    =  {   red,         black,       col_borderbar },
+       [SchemeGreen]  =  {   green,       black,       col_borderbar },
+       [SchemeOrange] =  {   orange,      black,       col_borderbar },
+       [SchemeYellow] =  {   yellow,      black,       col_borderbar },
+       [SchemePink]   =  {   pink,        black,       col_borderbar },
 };
 
 typedef struct {

@@ -40,14 +40,19 @@ static const char col_red[]         = "#ff0000";
 static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static char *colors[][3] = {
-       /*                    fg           bg           border   */
-       [SchemeNorm]   =  {   blue,        black,       col_borderbar },
-       [SchemeSel]    =  {   black,       blue,        col_borderbar },
-       [SchemeRed]    =  {   red,         black,       col_borderbar },
-       [SchemeGreen]  =  {   green,       black,       col_borderbar },
-       [SchemeOrange] =  {   orange,      black,       col_borderbar },
-       [SchemeYellow] =  {   yellow,      black,       col_borderbar },
-       [SchemePink]   =  {   pink,        black,       col_borderbar },
+             /*                    fg           bg           border   */
+/*[1]*/      [SchemeNorm]      =  {   blue,        black,       col_borderbar },
+/*[2]*/      [SchemeSel]       =  {   black,       blue,        col_borderbar },
+/*[3]*/      [SchemeRed]       =  {   red,         black,       col_borderbar },
+/*[4]*/      [SchemeGreen]     =  {   green,       black,       col_borderbar },
+/*[5]*/      [SchemeOrange]    =  {   orange,      black,       col_borderbar },
+/*[6]*/      [SchemeYellow]    =  {   yellow,      black,       col_borderbar },
+/*[7]*/      [SchemePink]      =  {   pink,        black,       col_borderbar },
+/*[8]*/      [SchemeRedInv]    =  {   black,       red,         col_borderbar },
+/*[9]*/      [SchemeGreenInv]  =  {   black,       green,       col_borderbar },
+/*[10]*/     [SchemeOrangeInv] =  {   black,       orange,      col_borderbar },
+/*[11]*/     [SchemeYellowInv] =  {   black,       yellow,      col_borderbar },
+/*[12]*/     [SchemePinkInv]   =  {   black,       pink,        col_borderbar },
 };
 
 typedef struct {
@@ -132,8 +137,8 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",		STRING,	&normbordercolor },
-		{ "color7",		STRING,	&selbordercolor },
+		{ "color0",		STRING,	&gray2 },
+		{ "color7",		STRING,	&gray4 },
 		{ "color0",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
@@ -282,9 +287,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pulseaudio-ctl mute; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
@@ -293,7 +298,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pulseaudio-ctl mute-input") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },

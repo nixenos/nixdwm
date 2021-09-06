@@ -4,6 +4,19 @@
 #define TERMINAL "st"
 #define TERMCLASS "St"
 
+/* onedark colors */
+static char black[]       = "#1e222a";
+static char gray2[]       = "#2e323a"; // unfocused window border
+static char gray3[]       = "#545862";
+static char gray4[]       = "#6d8dad";
+static char blue[]        = "#61afef";  // focused window border
+static char green[]       = "#7EC7A2";
+static char red[]         = "#e06c75";
+static char orange[]      = "#caaa6a";
+static char yellow[]      = "#EBCB8B";
+static char pink[]        = "#c678dd";
+static char col_borderbar[]  = "#1e222a"; // inner border
+
 /* appearance */
 static unsigned int borderpx  = 5;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
@@ -16,7 +29,7 @@ static int smartgaps          = 1;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=14", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "Material Design Icons-Regular:size=14", "FontAwesome:size=14" };
-static char normbgcolor[]           = "#222222";
+static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
@@ -27,9 +40,19 @@ static const char col_red[]         = "#ff0000";
 static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static char *colors[][3] = {
-       /*                    fg           bg           border   */
-       [SchemeNorm]   =  { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]    =  { selfgcolor,  selbgcolor,  selbordercolor  },
+             /*                    fg           bg           border   */
+/*[1]*/      [SchemeNorm]      =  {   blue,        black,       col_borderbar },
+/*[2]*/      [SchemeSel]       =  {   black,       blue,        col_borderbar },
+/*[3]*/      [SchemeRed]       =  {   red,         black,       col_borderbar },
+/*[4]*/      [SchemeGreen]     =  {   green,       black,       col_borderbar },
+/*[5]*/      [SchemeOrange]    =  {   orange,      black,       col_borderbar },
+/*[6]*/      [SchemeYellow]    =  {   yellow,      black,       col_borderbar },
+/*[7]*/      [SchemePink]      =  {   pink,        black,       col_borderbar },
+/*[8]*/      [SchemeRedInv]    =  {   black,       red,         col_borderbar },
+/*[9]*/      [SchemeGreenInv]  =  {   black,       green,       col_borderbar },
+/*[10]*/     [SchemeOrangeInv] =  {   black,       orange,      col_borderbar },
+/*[11]*/     [SchemeYellowInv] =  {   black,       yellow,      col_borderbar },
+/*[12]*/     [SchemePinkInv]   =  {   black,       pink,        col_borderbar },
 };
 
 typedef struct {
@@ -114,8 +137,8 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",		STRING,	&normbordercolor },
-		{ "color7",		STRING,	&selbordercolor },
+		{ "color0",		STRING,	&gray2 },
+		{ "color7",		STRING,	&gray4 },
 		{ "color0",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
@@ -264,9 +287,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pulseaudio-ctl mute; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
@@ -275,7 +298,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
-	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pulseaudio-ctl mute-input") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },

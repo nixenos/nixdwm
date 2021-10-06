@@ -41,8 +41,8 @@ static const char col_yellow[]      = "#ffff00";
 static const char col_white[]       = "#ffffff";
 static char *colors[][3] = {
              /*                    fg           bg           border   */
-/*[1]*/      [SchemeNorm]      =  {   blue,        black,       col_borderbar },
-/*[2]*/      [SchemeSel]       =  {   black,       blue,        col_borderbar },
+/*[1]*/      [SchemeNorm]      =  {   blue,        black,       gray2 },
+/*[2]*/      [SchemeSel]       =  {   black,       blue,        blue },
 /*[3]*/      [SchemeRed]       =  {   red,         black,       col_borderbar },
 /*[4]*/      [SchemeGreen]     =  {   green,       black,       col_borderbar },
 /*[5]*/      [SchemeOrange]    =  {   orange,      black,       col_borderbar },
